@@ -1,0 +1,81 @@
+<br/>
+<br/>
+<br/>
+
+<agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    <agm-marker *ngFor="let lugar of lugares" [latitude]="lugar.lat" [longitude]="lugar.lng" [label]="lugar.nombre">
+    </agm-marker>
+</agm-map>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-5 col-sm-5">
+            <div class="well well-lg">
+                <div class="input-group">
+                    <div class="input-group-btn"> 
+                        <button type="button" class="btn btn-default" (click)="getLugares()" aria-label="Help">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                        </button>
+                    </div>
+                    <input class="form-control" type="text" [(ngModel)]="article" placeholder="Artículo...">
+                    <div class="input-group-btn"> 
+                        <button class="btn btn-default" type="button" (click)="searchArticles(article)">Busqueda!</button>
+                    </div>
+                </div><!-- /input-group -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+        <a class="btn btn-primary" routerLink="/crear/new"><span class="glyphicon glyphicon-plus"></span> Crear Nuevo Negocio</a>
+        <div class="row">
+            <div class="col-xs-12 col-md-7 col-sm-7">
+            <h2>Lugares Cercanos</h2>
+            <ng-container *ngFor="let lugar of lugares">
+                    <ul class="list-group" *ngIf="lugar.id">
+                    <li class="list-group-item">
+                        <a *ngIf="loggedIn" routerLink="/crear/{{lugar.id}}">
+                            <h3>{{lugar.nombre}}</h3><span class="glyphicon glyphicon-star pull-right start-icon" *ngIf="lugar.plan == true"></span>
+                        </a>
+                        <a *ngIf="!loggedIn" (click)="pinLocation(lugar.lat + '|' + lugar.lng)">
+                            <h3>{{lugar.nombre}}</h3><span class="glyphicon glyphicon-star pull-right start-icon" *ngIf="lugar.plan == true"></span>
+                        </a>
+                        <p [innerHtml]="lugar.descripcion | linkifystr"></p>
+                        <p [innerHtml]="lugar.calle + ',' + lugar.ciudad + ',' + lugar.pais"></p>
+                    </li>
+                </ul>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td *ngFor="let art of lugar.items; let i=index;">
+                                <h3><span class="label label-default">
+                                    {{art.name}}
+                                </span></h3>
+                                <img style="height: 90px; width: 50%; display: block;" *ngIf="art.imgUrl" src="{{art.imgUrl}}"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+            </ng-container>
+            </div>
+            <div class="col-xs-12 col-md-5 col-sm-5">
+                <h2>Destacados</h2>
+                <ng-container *ngFor="let lugar of lugares">
+                    <div class="bg-warning padding" *ngIf="lugar.plan">
+                        <a routerLink="/crear/{{lugar.id}}"><h3>{{lugar.nombre}}</h3></a>
+                        <p [innerHtml]="lugar.descripcion | linkifystr"></p>
+                        <p [innerHtml]="lugar.calle + ',' + lugar.ciudad + ',' + lugar.pais"></p>
+                        <li class="list-group-item" *ngFor="let art of lugar.items">
+                            <h3><span class="label label-default">
+                                    {{art.name}}
+                            </span></h3>
+                                <img style="height: 90px; width: 20%; display: block;" *ngIf="art.imgUrl" src="{{art.imgUrl}}"/>
+                            </li>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+</div>
+<router-outlet></router-outlet>

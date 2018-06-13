@@ -1,0 +1,39 @@
+<br/>
+<br/>
+<br/>
+
+<div class="well">
+        <a routerLink="/lugares">Lugares</a> / Contacto
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <label>Nombre</label>
+                <input class="form-control" type="text">
+                <br/>
+                <label>Correo</label>
+                <input class="form-control" type="email">
+                <br/>
+                <label>Mensaje</label>
+                <textarea class="form-control" cols="30" rows="5"></textarea>
+                <hr/>
+                <button class="btn btn-primary"> Enviar </button>
+                <button class="btn btn-light" routerLink="/lugares"> Cancelar </button>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card box-shadow" style="width: 20rem;">
+                    <agm-map [latitude]="lat" [longitude]="lng">
+                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                    </agm-map>
+                    <h4>Public Ads</h4>
+                    <p>Es un sitio dedicado a la administración de la 
+                        publicidad de diferentes negocios</p>
+                    <h4>Escribenos a:</h4>
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    <label>publicads506@gmail.com</label>
+                </div>
+            </div>
+
+        </div>
+    </div>

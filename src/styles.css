@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+agm-map {
+    height: 300px;
+  }
+
+.numero_par{
+  background-color: aliceblue;
+  color: blue;
+}
+
+.gm-style div{color:blue !important; font-weight: bold; font-size: 14px;}

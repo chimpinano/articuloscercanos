@@ -1,0 +1,75 @@
+<br/>
+<br/>
+<br/>
+<div class="well">
+    <a routerLink="/lugares">Lugares</a> / Crear Lugar
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-sm-6">
+            <label>Nombre</label>
+            <input class="form-control" type="text" [(ngModel)]="lugar.nombre" required minlength="2" maxlength="50" placeholder="Nombre del local comercial"/>
+            <label>Descripción</label>
+            <textarea class="form-control" cols="30" rows="2" [(ngModel)]="lugar.descripcion" required maxlength="40" placeholder="Una breve descripción del local comercial"></textarea>
+            <h3>Datos de dirección</h3>
+            <div class="well">
+                <form>
+                    <label>Buscar dirección en google maps</label>
+                    <input type="text" class="form-control" [formControl]="searchField">
+                </form>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let result of results$ | async" (click)="seleccionarDireccion(result)">{{result.formatted_address}}</li>
+                </ul>
+            </div>
+            <label>Calle y Número</label>
+            <input class="form-control" type="text" [(ngModel)]="lugar.calle"/>
+            <label>Ciudad</label>
+            <input class="form-control" type="text" [(ngModel)]="lugar.ciudad"/>
+            <label>País</label>
+            <input class="form-control" type="text" [(ngModel)]="lugar.pais"/>
+            <hr/>
+            <button class="btn btn-primary" (click)="guardarLugar()"> Enviar </button>
+            <button class="btn btn-light" routerLink="/lugares"> Cancelar </button>
+            <br/>
+            <br/>
+            <div class="alert alert-success alert-dismissible" role="alert" [ngClass]="{hide: msgInfo == ''}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Bien hecho!</strong> <span>{{msgInfo}}</span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6 col-sm-6">
+            <div class="form-group">
+                <label>Cargar una imagen</label>
+                <input required accept="image/png,image/jpeg" id="file" name="file" type="file" >
+            </div>
+            <br/>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Digitar el nombre de un artículo" [(ngModel)]="article" required minlength="2" maxlength="35" >
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" (click)="addItem(article)">Agregar</button>
+                </span>
+            </div>
+            <hr/>
+            <div class="list-group">
+                <a href="#" class="list-group-item disabled">
+                    Item List
+                </a>
+                <a class="list-group-item clearfix" *ngFor="let item of itemList; let i = index;">
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    {{ i + 1 }} - {{item.name}}
+                    <span class="pull-right">
+                        <button class="btn btn-sm btn-" *ngIf="item.imgUrl">
+                            <span class="label label-success">Imagen</span>
+                        </button>
+                        <button class="btn btn-sm btn-danger" (click)="deleteItem(i)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </span>
+                </a>
+            </div><!-- list-group -->
+            <div *ngFor="let item of itemList">
+                <img style="height: 90px; width: 20%; display: block;" *ngIf="item.imgUrl" src="{{item.imgUrl}}"/>
+            </div>
+        </div>
+    </div><!-- row -->
+</div>
